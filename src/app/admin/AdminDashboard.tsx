@@ -35,10 +35,10 @@ import type { Product, BlogPost } from '@/types';
 // SIDEBAR NAVIGATION
 // ============================================
 const navItems = [
-  { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/admin/products', icon: Package, label: 'Products' },
+  { href: '/admin', icon: LayoutDashboard, label: 'Tableau de bord' },
+  { href: '/admin/products', icon: Package, label: 'Produits' },
   { href: '/admin/blog', icon: FileText, label: 'Blog' },
-  { href: '/admin/analytics', icon: BarChart3, label: 'Analytics' },
+  { href: '/admin/analytics', icon: BarChart3, label: 'Analytique' },
 ];
 
 function Sidebar() {

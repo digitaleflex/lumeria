@@ -4,7 +4,7 @@
    ============================================ */
 
 import { createContext, useContext, useCallback, useState } from 'react';
-import { authClient, useSession, signOut, signIn } from '@/lib/auth-client';
+import { useSession, signOut, signIn } from '@/lib/auth-client';
 import type { UserSession } from '@/types';
 
 interface AuthContextType {
