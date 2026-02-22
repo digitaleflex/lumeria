@@ -55,7 +55,7 @@ function Sidebar() {
     <aside className="fixed left-0 top-0 h-full w-64 bg-violet-950 text-white z-50 flex flex-col">
       <div className="p-6">
         <Link to="/" className="text-2xl font-bold">LUMORA</Link>
-        <p className="text-violet-400 text-sm">Admin Panel</p>
+        <p className="text-violet-400 text-sm">Panneau admin</p>
       </div>
 
       <nav className="px-4 py-4 space-y-1 flex-1">
@@ -96,7 +96,7 @@ function Sidebar() {
           className="flex items-center gap-3 px-4 py-3 w-full rounded-lg hover:bg-violet-900 transition-colors text-violet-300"
         >
           <LogOut className="w-5 h-5" />
-          Logout
+          Déconnexion
         </button>
       </div>
     </aside>
@@ -116,8 +116,8 @@ function DashboardHome() {
   return (
     <div className="space-y-8">
       <AdminHeader
-        title="Dashboard"
-        subtitle="Overview of your store performance"
+        title="Tableau de bord"
+        subtitle="Vue d'ensemble des performances de votre boutique"
       />
 
       {isLoading ? (
@@ -129,27 +129,27 @@ function DashboardHome() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
-            title="Total Products"
+            title="Total produits"
             value={products.length}
             icon={Package}
             color="violet"
             trend={{ value: '+12%', isPositive: true }}
           />
           <StatCard
-            title="Affiliate Clicks"
+            title="Clics affiliation"
             value={stats?.totalClicks || 0}
             icon={BarChart3}
             color="blue"
             trend={{ value: '+24%', isPositive: true }}
           />
           <StatCard
-            title="Blog Posts"
+            title="Articles blog"
             value={publishedPosts.length}
             icon={FileText}
             color="green"
           />
           <StatCard
-            title="Clicks Today"
+            title="Clics aujourd'hui"
             value={stats?.clicksToday || 0}
             icon={LayoutDashboard}
             color="amber"
@@ -160,34 +160,34 @@ function DashboardHome() {
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h3>
             <div className="flex flex-wrap gap-4">
               <Link to="/admin/products">
                 <Button className="bg-violet-600 hover:bg-violet-700 gap-2">
                   <Plus className="w-4 h-4" />
-                  Add Product
+                  Ajouter un produit
                 </Button>
               </Link>
               <Link to="/admin/blog">
                 <Button variant="outline" className="gap-2">
                   <Plus className="w-4 h-4" />
-                  New Article
+                  Nouvel article
                 </Button>
               </Link>
               <Link to="/admin/analytics">
                 <Button variant="outline" className="gap-2">
                   <BarChart3 className="w-4 h-4" />
-                  View Analytics
+                  Voir les analytiques
                 </Button>
               </Link>
             </div>
           </div>
         </div>
         <div className="bg-violet-50 rounded-2xl p-6">
-          <h3 className="text-lg font-semibold text-violet-900 mb-2">Pro Tip</h3>
+          <h3 className="text-lg font-semibold text-violet-900 mb-2">Conseil pro</h3>
           <p className="text-violet-700 text-sm">
-            Track your affiliate clicks to understand which products convert best.
-            Use UTM parameters to track traffic sources.
+            Suivez vos clics d'affiliation pour comprendre quels produits convertissent le mieux.
+            Utilisez les paramètres UTM pour suivre les sources de trafic.
           </p>
         </div>
       </div>
@@ -209,7 +209,7 @@ function ProductsPage() {
   };
 
   const handleDelete = async (product: Product) => {
-    if (confirm(`Delete "${product.name}"?`)) {
+    if (confirm(`Supprimer "${product.name}" ?`)) {
       await deleteProduct(product.id);
     }
   };
@@ -223,10 +223,10 @@ function ProductsPage() {
   return (
     <div className="space-y-6">
       <AdminHeader
-        title="Products"
-        subtitle="Manage your product catalog"
+        title="Produits"
+        subtitle="Gérez votre catalogue de produits"
         action={{
-          label: 'Add Product',
+          label: 'Ajouter un produit',
           onClick: () => { setEditingProduct(null); setIsModalOpen(true); },
           icon: <Plus className="w-4 h-4" />
         }}
@@ -238,10 +238,10 @@ function ProductsPage() {
         </div>
       ) : products.length === 0 ? (
         <EmptyState
-          title="No products yet"
-          description="Start by adding your first product"
+          title="Pas encore de produits"
+          description="Commencez par ajouter votre premier produit"
           action={{
-            label: 'Add Product',
+            label: 'Ajouter un produit',
             onClick: () => { setEditingProduct(null); setIsModalOpen(true); }
           }}
         />
@@ -257,7 +257,7 @@ function ProductsPage() {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editingProduct ? 'Edit Product' : 'Add Product'}</DialogTitle>
+            <DialogTitle>{editingProduct ? 'Modifier le produit' : 'Ajouter un produit'}</DialogTitle>
           </DialogHeader>
           <ProductForm
             product={editingProduct}
@@ -284,7 +284,7 @@ function BlogPage() {
   };
 
   const handleDelete = async (post: BlogPost) => {
-    if (confirm(`Delete "${post.title}"?`)) {
+    if (confirm(`Supprimer "${post.title}" ?`)) {
       await deletePost(post.id);
     }
   };
@@ -307,9 +307,9 @@ function BlogPage() {
     <div className="space-y-6">
       <AdminHeader
         title="Blog"
-        subtitle="Manage your articles"
+        subtitle="Gérez vos articles"
         action={{
-          label: 'New Article',
+          label: 'Nouvel article',
           onClick: () => { setEditingPost(null); setIsModalOpen(true); },
           icon: <Plus className="w-4 h-4" />
         }}
@@ -321,10 +321,10 @@ function BlogPage() {
         </div>
       ) : posts.length === 0 ? (
         <EmptyState
-          title="No articles yet"
-          description="Start by creating your first article"
+          title="Pas encore d'articles"
+          description="Commencez par créer votre premier article"
           action={{
-            label: 'New Article',
+            label: 'Nouvel article',
             onClick: () => { setEditingPost(null); setIsModalOpen(true); }
           }}
         />
@@ -340,7 +340,7 @@ function BlogPage() {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editingPost ? 'Edit Article' : 'New Article'}</DialogTitle>
+            <DialogTitle>{editingPost ? 'Modifier l\'article' : 'Nouvel article'}</DialogTitle>
           </DialogHeader>
           <BlogForm
             post={editingPost}
