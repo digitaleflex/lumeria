@@ -71,7 +71,7 @@ export function AddToCartButton({
           ) : (
             <ShoppingBag className="w-4 h-4 mr-2" />
           )}
-          {isSuccess ? 'Added!' : 'Add to Cart'}
+          {isSuccess ? 'Ajouté !' : 'Ajouter au panier'}
         </Button>
       </div>
     );
@@ -95,7 +95,7 @@ export function AddToCartButton({
       ) : (
         <ShoppingBag className="w-4 h-4 mr-2" />
       )}
-      {isSuccess ? 'Added!' : 'Add to Cart'}
+      {isSuccess ? 'Ajouté !' : 'Ajouter au panier'}
     </Button>
   );
 }
