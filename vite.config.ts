@@ -18,6 +18,10 @@ export default defineConfig(({ mode }) => {
         ...env,
         DATABASE_URL: env.DATABASE_URL
       })
+    },
+    server: {
+      port: 5173,
+      strictPort: true, // Fail if port is in use
     }
   };
 });

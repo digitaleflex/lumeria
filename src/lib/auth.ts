@@ -114,7 +114,7 @@ async function sendMagicLinkEmail(email: string, url: string): Promise<void> {
   await brevo.transactionalEmails.sendTransacEmail({
     sender: {
       name: "Lumiera",
-      email: "noreply@lumiera.com"
+      email: "eurin@eurinhash.com"
     },
     to: [{ email }],
     subject: "Votre lien de connexion Lumiera",
@@ -155,7 +155,7 @@ export const auth = betterAuth({
   }),
   plugins: [
     magicLink({
-      sendMagicLink: async ({ email, token, url }) => {
+      sendMagicLink: async ({ email, url }) => {
         // Check rate limit
         const rateCheck = await checkRateLimit(email);
 
@@ -176,7 +176,13 @@ export const auth = betterAuth({
       expiresIn: 60 * 10, // 10 minutes
     }),
   ],
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3001",
+  socialProviders: {
+    google: {
+      clientId: process.env.VITE_GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    },
+  },
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   secret: process.env.BETTER_AUTH_SECRET || "your-super-secret-key-change-in-production-min-32-chars",
 });
 

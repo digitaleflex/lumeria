@@ -19,13 +19,13 @@ export function WishlistPage() {
                 <div className="w-20 h-20 bg-rose-100 dark:bg-rose-900/50 rounded-full flex items-center justify-center mb-6">
                     <Heart className="w-10 h-10 text-rose-500 flex-shrink-0" />
                 </div>
-                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Login to view your wishlist</h2>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Connectez-vous pour voir vos favoris</h2>
                 <p className="text-gray-500 text-center max-w-md mb-8">
-                    Save your favorite products to your wishlist and access them anytime, anywhere.
+                    Enregistrez vos produits préférés dans vos favoris et accédez-y à tout moment, n'importe où.
                 </p>
                 <Link to="/login">
                     <Button className="bg-violet-600 hover:bg-violet-700 text-white rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
-                        Login
+                        Se connecter
                     </Button>
                 </Link>
             </div>
@@ -35,7 +35,7 @@ export function WishlistPage() {
     if (isLoading) {
         return (
             <div className="container mx-auto px-4 py-8 bg-violet-100 dark:bg-gray-900 min-h-screen">
-                <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">{t('nav.wishlist') || 'My Wishlist'}</h1>
+                <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">{t('nav.wishlist') || 'Mes favoris'}</h1>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {[1, 2, 3, 4].map((n) => (
                         <div key={n} className="animate-pulse">
@@ -53,9 +53,9 @@ export function WishlistPage() {
         <div className="container mx-auto px-4 py-8 bg-violet-100 dark:bg-gray-900 min-h-screen">
             <div className="flex items-center gap-3 mb-8">
                 <Heart className="w-8 h-8 text-rose-500 fill-rose-500" />
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{t('nav.wishlist') || 'My Wishlist'}</h1>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{t('nav.wishlist') || 'Mes favoris'}</h1>
                 <span className="text-sm font-medium text-gray-500 bg-white/50 dark:bg-gray-800 px-3 py-1 rounded-full">
-                    {items.length} {items.length === 1 ? 'item' : 'items'}
+                    {items.length} {items.length === 1 ? 'article' : 'articles'}
                 </span>
             </div>
 
@@ -64,16 +64,16 @@ export function WishlistPage() {
                     <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6">
                         <Heart className="w-10 h-10 text-rose-300 dark:text-rose-700" />
                     </div>
-                    <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your wishlist is empty</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Vos favoris sont vides</h2>
                     <p className="text-gray-500 text-center max-w-md mb-8">
-                        Explore our products and save your favorites here.
+                        Explorez nos produits et enregistrez vos favoris ici.
                     </p>
                     <Link
                         to="/shop"
                         className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-8 py-3 rounded-xl font-medium transition-colors"
                     >
                         <ShoppingBag className="w-5 h-5" />
-                        Start Shopping
+                        Commencer les achats
                     </Link>
                 </div>
             ) : (
@@ -90,7 +90,7 @@ export function WishlistPage() {
                                     removeItem(user.id, item.productId);
                                 }}
                                 className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm text-rose-500 hover:text-white hover:bg-rose-500 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-sm z-10"
-                                aria-label="Remove from wishlist"
+                                aria-label="Retirer des favoris"
                             >
                                 <Heart className="w-4 h-4 fill-current" />
                             </button>

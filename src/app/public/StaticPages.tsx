@@ -5,7 +5,7 @@ const PageTemplate = ({ title, content }: { title: string, content: React.ReactN
     <div className="container mx-auto px-4 py-32 max-w-4xl min-h-screen">
         <Link to="/" className="inline-flex items-center text-violet-600 hover:text-violet-700 font-medium mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            Retour à l'accueil
         </Link>
         <h1 className="text-4xl md:text-5xl font-['Playfair_Display'] font-bold text-gray-900 mb-8">{title}</h1>
         <div className="prose prose-lg prose-violet max-w-none text-gray-600">
@@ -15,77 +15,77 @@ const PageTemplate = ({ title, content }: { title: string, content: React.ReactN
 );
 
 export function AboutUs() {
-    return <PageTemplate title="About Us" content={
+    return <PageTemplate title="À propos de nous" content={
         <div className="space-y-6">
-            <p>Welcome to LUMORA. We believe that skincare goes beyond surface-level beauty—it's about how you feel in your own skin.</p>
-            <p>Our mission is to provide high-quality, cruelty-free, and vegan skincare products that are accessible to everyone, all while promoting self-care and confidence.</p>
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Our Values</h2>
+            <p>Bienvenue chez LUMORA. Nous croyons que les soins de la peau vont au-delà de la beauté superficielle—il s'agit de comment vous vous sentez dans votre peau.</p>
+            <p>Notre mission est de fournir des produits de soins de la peau de haute qualité, sans cruauté et végans, accessibles à tous, tout en favorisant le soin de soi et la confiance.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Nos valeurs</h2>
             <ul className="list-disc pl-6 space-y-2">
-                <li><strong>Cruelty-Free & Vegan:</strong> We love animals as much as we love skincare.</li>
-                <li><strong>Dermatologist-Approved:</strong> Formulated with ingredients backed by science.</li>
-                <li><strong>Transparency:</strong> No hidden ingredients, no false promises.</li>
+                <li><strong>Sans cruauté et végan :</strong> Nous aimons les animaux autant que nous aimons les soins de la peau.</li>
+                <li><strong>Approuvé par les dermatologues :</strong> Formulé avec des ingrédients soutenus par la science.</li>
+                <li><strong>Transparence :</strong> Pas d'ingrédients cachés, pas de fausses promesses.</li>
             </ul>
         </div>
     } />;
 }
 
 export function Contact() {
-    return <PageTemplate title="Contact Us" content={
+    return <PageTemplate title="Contactez-nous" content={
         <div className="space-y-6">
-            <p>We'd love to hear from you! Whether you have a question about our products, your order, or just want to say hello, our team is here to help.</p>
+            <p>Nous serions ravis de vous entendre ! Que vous ayez une question sur nos produits, votre commande, ou que vous vouliez simplement dire bonjour, notre équipe est là pour vous aider.</p>
             <div className="bg-violet-50 p-6 rounded-2xl mt-8">
-                <h3 className="font-bold text-gray-900 mb-2">Customer Support</h3>
-                <p>Email: <a href="mailto:support@lumora.com" className="text-violet-600">support@lumora.com</a></p>
-                <p>Hours: Mon-Fri, 9am - 5pm EST</p>
+                <h3 className="font-bold text-gray-900 mb-2">Support client</h3>
+                <p>Email : <a href="mailto:support@lumora.com" className="text-violet-600">support@lumora.com</a></p>
+                <p>Heures : Lun-Ven, 9h - 17h</p>
             </div>
         </div>
     } />;
 }
 
 export function FAQ() {
-    return <PageTemplate title="Frequently Asked Questions" content={
+    return <PageTemplate title="Questions fréquemment posées" content={
         <div className="space-y-8">
             <div>
-                <h3 className="font-bold text-gray-900 mb-2">Are your products vegan and cruelty-free?</h3>
-                <p>Yes! Every single product in the Lumora line is 100% vegan and certified cruelty-free. We never test on animals.</p>
+                <h3 className="font-bold text-gray-900 mb-2">Vos produits sont-ils végans et sans cruauté ?</h3>
+                <p>Oui ! Chaque produit de la gamme Lumora est 100% végan et certifié sans cruauté. Nous ne testons jamais sur les animaux.</p>
             </div>
             <div>
-                <h3 className="font-bold text-gray-900 mb-2">How long does shipping take?</h3>
-                <p>Standard shipping usually takes 3-5 business days within the contiguous US. International shipping can take 7-14 business days.</p>
+                <h3 className="font-bold text-gray-900 mb-2">Combien de temps prend la livraison ?</h3>
+                <p>La livraison standard prend généralement 3-5 jours ouvrables. La livraison internationale peut prendre 7-14 jours ouvrables.</p>
             </div>
             <div>
-                <h3 className="font-bold text-gray-900 mb-2">Do you offer returns?</h3>
-                <p>We offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, please contact us for a return authorization.</p>
+                <h3 className="font-bold text-gray-900 mb-2">Proposez-vous des retours ?</h3>
+                <p>Nous offrons une garantie satisfait ou remboursé de 30 jours. Si vous n'êtes pas complètement satisfait de votre achat, veuillez nous contacter pour une autorisation de retour.</p>
             </div>
         </div>
     } />;
 }
 
 export function Shipping() {
-    return <PageTemplate title="Shipping Information" content={
+    return <PageTemplate title="Informations de livraison" content={
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Domestic Shipping (US)</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Livraison nationale</h2>
             <ul className="list-disc pl-6 space-y-2">
-                <li>Standard Shipping (3-5 business days): $5.99</li>
-                <li>Express Shipping (1-2 business days): $14.99</li>
-                <li>Free Standard Shipping on all orders over $50!</li>
+                <li>Livraison standard (3-5 jours ouvrables) : 5,99 €</li>
+                <li>Livraison express (1-2 jours ouvrables) : 14,99 €</li>
+                <li>Livraison standard gratuite pour toutes les commandes de plus de 50 € !</li>
             </ul>
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">International Shipping</h2>
-            <p>We currently ship to over 50 countries globally. Shipping rates and times vary depending on the destination. Customs fees and duties may apply and are the responsibility of the customer.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Livraison internationale</h2>
+            <p>Nous livrons actuellement dans plus de 50 pays. Les tarifs et délais de livraison varient selon la destination. Les frais de douane et droits de douane peuvent s'appliquer et sont à la charge du client.</p>
         </div>
     } />;
 }
 
 export function Returns() {
-    return <PageTemplate title="Returns & Exchanges" content={
+    return <PageTemplate title="Retours et échanges" content={
         <div className="space-y-6">
-            <p>Your satisfaction is our top priority. If you do not love your Lumora products, we offer a 30-day money-back guarantee.</p>
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How to Return</h2>
+            <p>Votre satisfaction est notre priorité absolue. Si vous n'aimez pas vos produits Lumora, nous offrons une garantie satisfait ou remboursé de 30 jours.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Comment retourner</h2>
             <ol className="list-decimal pl-6 space-y-2">
-                <li>Contact our support team at <a href="mailto:support@lumora.com" className="text-violet-600">support@lumora.com</a> with your order number.</li>
-                <li>We will provide a pre-paid return label.</li>
-                <li>Print the label, attach it to your package, and drop it off at the designated carrier.</li>
-                <li>Refunds are processed within 5-7 business days after we receive your return.</li>
+                <li>Contactez notre équipe de support à <a href="mailto:support@lumora.com" className="text-violet-600">support@lumora.com</a> avec votre numéro de commande.</li>
+                <li>Nous vous fournirons une étiquette de retour prépayée.</li>
+                <li>Imprimez l'étiquette, attachez-la à votre colis et déposez-le chez le transporteur désigné.</li>
+                <li>Les remboursements sont traités dans les 5-7 jours ouvrables après réception de votre retour.</li>
             </ol>
         </div>
     } />;
