@@ -151,7 +151,7 @@ export function Navbar({ onCartClick }: NavbarProps) {
                         onClick={() => setIsProfileOpen(false)}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                       >
-                        Admin Dashboard
+                        Tableau de bord Admin
                       </Link>
                     )}
                     <button
@@ -225,7 +225,7 @@ export function Navbar({ onCartClick }: NavbarProps) {
 
                   {/* Additional Mobile Options */}
                   <div className="flex justify-between items-center py-2 border-b border-gray-100 pb-4 mt-4">
-                    <span className="text-gray-500 font-medium">Language</span>
+                    <span className="text-gray-500 font-medium">Langue</span>
                     <div className="flex gap-2">
                       <button onClick={() => setLocale('en')} className={cn("px-3 py-1 rounded text-sm font-medium transition", locale === 'en' ? "bg-violet-100 text-violet-600" : "text-gray-500 hover:bg-gray-50")}>EN</button>
                       <button onClick={() => setLocale('fr')} className={cn("px-3 py-1 rounded text-sm font-medium transition", locale === 'fr' ? "bg-violet-100 text-violet-600" : "text-gray-500 hover:bg-gray-50")}>FR</button>
@@ -233,7 +233,7 @@ export function Navbar({ onCartClick }: NavbarProps) {
                   </div>
 
                   <div className="flex justify-between items-center py-2 border-b border-gray-100 pb-4">
-                    <span className="text-gray-500 font-medium">Dark Mode</span>
+                    <span className="text-gray-500 font-medium">Mode sombre</span>
                     <button onClick={() => document.documentElement.classList.toggle('dark')} className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                       <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                     </button>
@@ -254,7 +254,7 @@ export function Navbar({ onCartClick }: NavbarProps) {
                         </div>
                       </div>
                       {isAdmin && (
-                        <Link to="/admin" className="block w-full text-center py-2 bg-violet-50 text-violet-600 rounded-xl font-medium">Admin Dashboard</Link>
+                        <Link to="/admin" className="block w-full text-center py-2 bg-violet-50 text-violet-600 rounded-xl font-medium">Tableau de bord Admin</Link>
                       )}
                       <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 py-3 mt-2 bg-rose-50 text-rose-600 rounded-xl font-medium">
                         <LogOut className="w-5 h-5" /> {t('nav.logout')}
@@ -262,7 +262,7 @@ export function Navbar({ onCartClick }: NavbarProps) {
                     </div>
                   ) : (
                     <Link to="/login" className="flex justify-center items-center py-3 mt-4 bg-violet-600 hover:bg-violet-700 transition text-white rounded-xl font-medium">
-                      <User className="w-5 h-5 mr-2" /> Login
+                      <User className="w-5 h-5 mr-2" /> Se connecter
                     </Link>
                   )}
                 </nav>
