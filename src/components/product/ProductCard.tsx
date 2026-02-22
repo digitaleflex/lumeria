@@ -79,7 +79,7 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {product.isBestseller && (
           <span className="bg-violet-600 text-white text-xs px-3 py-1 rounded-full font-medium">
-            Best Seller
+            Best-seller
           </span>
         )}
         {discount > 0 && (
@@ -161,7 +161,7 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
             className="bg-violet-600 hover:bg-violet-700"
           >
             <ShoppingBag className="w-4 h-4 mr-1" />
-            Add
+            Ajouter
           </Button>
         </div>
       </div>

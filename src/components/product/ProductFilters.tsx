@@ -15,20 +15,20 @@ interface ProductFiltersProps {
 }
 
 const skinTypes: { value: SkinType; label: string }[] = [
-  { value: 'dry', label: 'Dry' },
-  { value: 'oily', label: 'Oily' },
-  { value: 'combination', label: 'Combination' },
-  { value: 'sensitive', label: 'Sensitive' },
-  { value: 'normal', label: 'Normal' },
-  { value: 'acne-prone', label: 'Acne-Prone' },
+  { value: 'dry', label: 'Sèche' },
+  { value: 'oily', label: 'Grasse' },
+  { value: 'combination', label: 'Mixte' },
+  { value: 'sensitive', label: 'Sensible' },
+  { value: 'normal', label: 'Normale' },
+  { value: 'acne-prone', label: 'Acnéique' },
 ];
 
 const sortOptions = [
-  { value: 'trending', label: 'Trending' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'rating', label: 'Highest Rated' },
-  { value: 'newest', label: 'Newest' },
+  { value: 'trending', label: 'Tendances' },
+  { value: 'price-asc', label: 'Prix : Croissant' },
+  { value: 'price-desc', label: 'Prix : Décroissant' },
+  { value: 'rating', label: 'Mieux notés' },
+  { value: 'newest', label: 'Nouveautés' },
 ];
 
 export function ProductFilters({ filters, onFilterChange, categories }: ProductFiltersProps) {
@@ -45,7 +45,7 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
     onFilterChange({});
   };
 
-  const hasActiveFilters = Object.keys(filters).some(key => 
+  const hasActiveFilters = Object.keys(filters).some(key =>
     filters[key as keyof Filters] !== undefined
   );
 
@@ -53,7 +53,7 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
     <div className="space-y-6">
       {/* Category */}
       <div>
-        <h4 className="font-medium mb-3">Category</h4>
+        <h4 className="font-medium mb-3">Catégorie</h4>
         <div className="space-y-2">
           {categories.map((cat) => (
             <label key={cat.slug} className="flex items-center gap-2 cursor-pointer">
@@ -72,16 +72,16 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
 
       {/* Skin Type */}
       <div>
-        <h4 className="font-medium mb-3">Skin Type</h4>
+        <h4 className="font-medium mb-3">Type de peau</h4>
         <div className="space-y-2">
           {skinTypes.map((type) => (
             <label key={type.value} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={localFilters.skinType === type.value}
-                onChange={(e) => setLocalFilters({ 
-                  ...localFilters, 
-                  skinType: e.target.checked ? type.value : undefined 
+                onChange={(e) => setLocalFilters({
+                  ...localFilters,
+                  skinType: e.target.checked ? type.value : undefined
                 })}
                 className="text-violet-600 focus:ring-violet-500 rounded"
               />
@@ -93,15 +93,15 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
 
       {/* Price Range */}
       <div>
-        <h4 className="font-medium mb-3">Price Range</h4>
+        <h4 className="font-medium mb-3">Gamme de prix</h4>
         <div className="flex gap-2">
           <input
             type="number"
             placeholder="Min"
             value={localFilters.minPrice || ''}
-            onChange={(e) => setLocalFilters({ 
-              ...localFilters, 
-              minPrice: e.target.value ? Number(e.target.value) : undefined 
+            onChange={(e) => setLocalFilters({
+              ...localFilters,
+              minPrice: e.target.value ? Number(e.target.value) : undefined
             })}
             className="w-full px-3 py-2 border rounded-lg text-sm"
           />
@@ -109,9 +109,9 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
             type="number"
             placeholder="Max"
             value={localFilters.maxPrice || ''}
-            onChange={(e) => setLocalFilters({ 
-              ...localFilters, 
-              maxPrice: e.target.value ? Number(e.target.value) : undefined 
+            onChange={(e) => setLocalFilters({
+              ...localFilters,
+              maxPrice: e.target.value ? Number(e.target.value) : undefined
             })}
             className="w-full px-3 py-2 border rounded-lg text-sm"
           />
@@ -120,11 +120,11 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
 
       {/* Sort */}
       <div>
-        <h4 className="font-medium mb-3">Sort By</h4>
+        <h4 className="font-medium mb-3">Trier par</h4>
         <select
           value={localFilters.sortBy || 'trending'}
-          onChange={(e) => setLocalFilters({ 
-            ...localFilters, 
+          onChange={(e) => setLocalFilters({
+            ...localFilters,
             sortBy: e.target.value as Filters['sortBy']
           })}
           className="w-full px-3 py-2 border rounded-lg text-sm"
@@ -138,11 +138,11 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
       {/* Actions */}
       <div className="flex gap-2 pt-4">
         <Button onClick={applyFilters} className="flex-1 bg-violet-600 hover:bg-violet-700">
-          Apply Filters
+          Appliquer
         </Button>
         {hasActiveFilters && (
           <Button variant="outline" onClick={clearFilters}>
-            Clear
+            Effacer
           </Button>
         )}
       </div>
@@ -161,7 +161,7 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
         <SheetTrigger asChild className="lg:hidden">
           <Button variant="outline" className="gap-2">
             <SlidersHorizontal className="w-4 h-4" />
-            Filters
+            Filtres
             {hasActiveFilters && (
               <span className="w-2 h-2 bg-violet-600 rounded-full" />
             )}
@@ -169,10 +169,10 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
         </SheetTrigger>
         <SheetContent side="left" className="w-80 overflow-y-auto">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-semibold text-lg">Filters</h3>
+            <h3 className="font-semibold text-lg">Filtres</h3>
             {hasActiveFilters && (
               <button onClick={clearFilters} className="text-sm text-violet-600">
-                Clear all
+                Tout effacer
               </button>
             )}
           </div>
@@ -184,8 +184,8 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
       <div className="hidden lg:block ml-auto">
         <select
           value={filters.sortBy || 'trending'}
-          onChange={(e) => onFilterChange({ 
-            ...filters, 
+          onChange={(e) => onFilterChange({
+            ...filters,
             sortBy: e.target.value as Filters['sortBy']
           })}
           className="px-4 py-2 border rounded-lg text-sm"
