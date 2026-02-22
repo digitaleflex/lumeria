@@ -368,8 +368,8 @@ function AnalyticsPage() {
   return (
     <div className="space-y-6">
       <AdminHeader
-        title="Analytics"
-        subtitle="Track your affiliate performance"
+        title="Analytique"
+        subtitle="Suivez vos performances d'affiliation"
       />
 
       {isLoading ? (
@@ -382,25 +382,25 @@ function AnalyticsPage() {
         <>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatCard
-              title="Total Clicks"
+              title="Total clics"
               value={stats?.totalClicks || 0}
               icon={BarChart3}
               color="violet"
             />
             <StatCard
-              title="Today"
+              title="Aujourd'hui"
               value={stats?.clicksToday || 0}
               icon={LayoutDashboard}
               color="blue"
             />
             <StatCard
-              title="This Week"
+              title="Cette semaine"
               value={stats?.clicksThisWeek || 0}
               icon={BarChart3}
               color="green"
             />
             <StatCard
-              title="This Month"
+              title="Ce mois"
               value={stats?.clicksThisMonth || 0}
               icon={BarChart3}
               color="amber"
@@ -417,19 +417,19 @@ function AnalyticsPage() {
           <div className="grid lg:grid-cols-2 gap-6">
             <SourceClicksList sources={sourceClicks} />
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Tracking Tips</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Conseils de suivi</h3>
               <ul className="space-y-3 text-sm text-gray-600">
                 <li className="flex items-start gap-2">
                   <span className="w-5 h-5 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</span>
-                  Use UTM parameters to track influencer campaigns
+                  Utilisez les paramètres UTM pour suivre les campagnes d'influenceurs
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-5 h-5 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</span>
-                  Monitor top products to optimize your catalog
+                  Surveillez les meilleurs produits pour optimiser votre catalogue
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-5 h-5 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</span>
-                  Track conversion rates by traffic source
+                  Suivez les taux de conversion par source de trafic
                 </li>
               </ul>
             </div>
