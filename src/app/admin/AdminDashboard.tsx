@@ -92,15 +92,6 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       </nav>
 
       <div className="p-6 m-4 bg-gray-50 rounded-[30px] border border-gray-100">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center">
-            <User className="w-5 h-5 text-violet-600" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-gray-900 truncate">{user?.name}</p>
-            <p className="text-[10px] text-gray-500 font-medium truncate">{user?.email}</p>
-          </div>
-        </div>
         <button
           onClick={handleLogout}
           className="flex items-center justify-center gap-2 px-4 py-3 w-full rounded-2xl bg-white text-rose-500 border border-gray-100 hover:bg-rose-50 hover:border-rose-100 transition-all font-bold text-sm shadow-sm"

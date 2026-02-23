@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:server": "tsx watch server/index.ts",
-    "dev:all": "npm run dev:server & npm run dev",
+    "dev:server": "node --env-file=.env --import tsx/esm server/index.ts",
+    "dev:all": "concurrently \"npm run dev:server\" \"npm run dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
+    "db:push": "dotenv -e .env -- drizzle-kit push",
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
@@ -83,6 +83,8 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.23",
+    "concurrently": "^9.2.1",
+    "dotenv-cli": "^11.0.0",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",

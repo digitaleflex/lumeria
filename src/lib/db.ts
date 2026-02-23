@@ -10,9 +10,8 @@ if (!databaseUrl) {
   console.log("🔗 Connecting to database...");
 }
 
-const sql = neon(databaseUrl!);
+const sql = neon(databaseUrl!, { disableWarningInBrowsers: true });
 
 export const db = drizzle({ client: sql, schema });
 
 console.log("✅ Database connection established");
-
