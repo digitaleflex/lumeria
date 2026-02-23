@@ -9,6 +9,7 @@ import { Footer } from '@/components/layout/Footer';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { CartProvider } from '@/contexts/CartContext';
 import { useCart } from '@/hooks/useCart';
 
 // Public Pages
@@ -100,7 +101,9 @@ function App() {
     <BrowserRouter>
       <LanguageProvider>
         <AuthProvider>
-          <AppRoutes />
+          <CartProvider>
+            <AppRoutes />
+          </CartProvider>
         </AuthProvider>
       </LanguageProvider>
     </BrowserRouter>
