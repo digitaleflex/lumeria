@@ -64,8 +64,9 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
     onSubmit(data);
   };
 
-  const insertFormatting = (tag: string) => {
-    const textarea = document.getElementById('blog-content') as HTMLTextAreaElement;
+  const insertFormatting = (tag: string, field: 'content' | 'contentFr' = 'content') => {
+    const textareaId = field === 'content' ? 'blog-content' : 'blog-content-fr';
+    const textarea = document.getElementById(textareaId) as HTMLTextAreaElement;
     if (!textarea) return;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
@@ -83,7 +84,7 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
     }
 
     const newValue = text.substring(0, start) + replacement + text.substring(end);
-    setFormData({ ...formData, content: newValue });
+    setFormData({ ...formData, [field]: newValue });
 
     // Focus back and set selection
     setTimeout(() => {
@@ -93,21 +94,32 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-16 py-4">
+    <form onSubmit={handleSubmit} className="space-y-10 md:space-y-12 py-4 md:py-8">
       {/* SECTION : TITRE ET AUTEUR */}
-      <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm space-y-10">
-        <h3 className="text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-4">
-          <span className="w-12 h-[3px] bg-violet-600 rounded-full"></span>
-          Informations de l'article
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8">
+        <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
+          <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
+          Article Title (English & French)
         </h3>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Titre de l'article *</label>
+            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Title English *</label>
             <input
               type="text"
               value={formData.title}
               onChange={e => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold text-xl"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold text-lg md:text-xl"
+              placeholder="ex: How to take care of your skin in winter"
+              required
+            />
+          </div>
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold uppercase tracking-widest text-violet-400 ml-1">Titre Français *</label>
+            <input
+              type="text"
+              value={formData.titleFr}
+              onChange={e => setFormData({ ...formData, titleFr: e.target.value })}
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-violet-50 border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold text-lg md:text-xl text-violet-900"
               placeholder="ex: Comment prendre soin de sa peau en hiver"
               required
             />
@@ -118,7 +130,7 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
               type="text"
               value={formData.author}
               onChange={e => setFormData({ ...formData, author: e.target.value })}
-              className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
               placeholder="ex: Équipe Lumora"
             />
           </div>
@@ -126,19 +138,19 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
       </div>
 
       {/* SECTION : VISUELS ET TAGS */}
-      <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm space-y-10">
-        <h3 className="text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-4">
-          <span className="w-12 h-[3px] bg-violet-600 rounded-full"></span>
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8">
+        <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
+          <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Médias & Organisation
         </h3>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
           <div className="space-y-3">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Image de couverture (URL)</label>
             <input
               type="url"
               value={formData.coverImage}
               onChange={e => setFormData({ ...formData, coverImage: e.target.value })}
-              className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-blue-600"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-blue-600"
               placeholder="https://..."
             />
           </div>
@@ -148,7 +160,7 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
               type="text"
               value={formData.tags}
               onChange={e => setFormData({ ...formData, tags: e.target.value })}
-              className="w-full px-6 py-4 bg-violet-50 border border-violet-100 text-violet-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-violet-50 border border-violet-100 text-violet-700 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium"
               placeholder="skincare, éclat, routine"
             />
           </div>
@@ -156,57 +168,90 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
       </div>
 
       {/* SECTION : ÉDITEUR DE CONTENU */}
-      <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm space-y-10">
-        <h3 className="text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-4">
-          <span className="w-12 h-[3px] bg-violet-600 rounded-full"></span>
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8">
+        <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
+          <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Rédaction du contenu
         </h3>
-        <div className="space-y-6">
+        <div className="space-y-6 md:space-y-8">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Introduction (Extrait pour la grille) *</label>
+            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Excerpt English *</label>
             <textarea
               value={formData.excerpt}
               onChange={e => setFormData({ ...formData, excerpt: e.target.value })}
-              className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
               required
               maxLength={200}
-              placeholder="Un cours résumé accrocheur..."
+              placeholder="English excerpt..."
+            />
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Extrait Français *</label>
+            <textarea
+              value={formData.excerptFr}
+              onChange={e => setFormData({ ...formData, excerptFr: e.target.value })}
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-violet-50 border border-violet-100 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none text-violet-900"
+              required
+              maxLength={200}
+              placeholder="Extrait français..."
             />
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between ml-1">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Corps de l'article (Éditeur Markdown) *</label>
-              <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
-                <button type="button" onClick={() => insertFormatting('h2')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600">H2</button>
-                <button type="button" onClick={() => insertFormatting('h3')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600">H3</button>
-                <button type="button" onClick={() => insertFormatting('b')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600">G</button>
-                <button type="button" onClick={() => insertFormatting('i')} className="px-2 py-1 text-xs italic hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600">I</button>
-                <button type="button" onClick={() => insertFormatting('list')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600">• List</button>
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Content English (Markdown Editor) *</label>
+              <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm overflow-x-auto">
+                <button type="button" onClick={() => insertFormatting('h2', 'content')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600 whitespace-nowrap">H2</button>
+                <button type="button" onClick={() => insertFormatting('h3', 'content')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600 whitespace-nowrap">H3</button>
+                <button type="button" onClick={() => insertFormatting('b', 'content')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600 whitespace-nowrap">G</button>
+                <button type="button" onClick={() => insertFormatting('i', 'content')} className="px-2 py-1 text-xs italic hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600 whitespace-nowrap">I</button>
+                <button type="button" onClick={() => insertFormatting('list', 'content')} className="px-2 py-1 text-xs font-bold hover:bg-violet-50 rounded text-gray-600 hover:text-violet-600 whitespace-nowrap">• List</button>
               </div>
             </div>
             <textarea
               id="blog-content"
               value={formData.content}
               onChange={e => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-8 py-8 bg-white border border-gray-200 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-mono text-base h-[500px] leading-relaxed"
+              className="w-full px-4 md:px-6 py-4 md:py-6 bg-white border border-gray-200 rounded-xl md:rounded-[32px] focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-mono text-sm md:text-base h-[300px] leading-relaxed"
               required
-              placeholder="Rédigez votre histoire ici..."
+              placeholder="Write your content in English..."
+            />
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between ml-1">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-violet-400">Contenu Français (Éditeur Markdown) *</label>
+              <div className="flex items-center gap-1 bg-violet-50 border border-violet-200 rounded-xl p-1 shadow-sm overflow-x-auto">
+                <button type="button" onClick={() => insertFormatting('h2', 'contentFr')} className="px-2 py-1 text-xs font-bold hover:bg-white rounded text-violet-600 hover:text-violet-800 whitespace-nowrap">H2</button>
+                <button type="button" onClick={() => insertFormatting('h3', 'contentFr')} className="px-2 py-1 text-xs font-bold hover:bg-white rounded text-violet-600 hover:text-violet-800 whitespace-nowrap">H3</button>
+                <button type="button" onClick={() => insertFormatting('b', 'contentFr')} className="px-2 py-1 text-xs font-bold hover:bg-white rounded text-violet-600 hover:text-violet-800 whitespace-nowrap">G</button>
+                <button type="button" onClick={() => insertFormatting('i', 'contentFr')} className="px-2 py-1 text-xs italic hover:bg-white rounded text-violet-600 hover:text-violet-800 whitespace-nowrap">I</button>
+                <button type="button" onClick={() => insertFormatting('list', 'contentFr')} className="px-2 py-1 text-xs font-bold hover:bg-white rounded text-violet-600 hover:text-violet-800 whitespace-nowrap">• List</button>
+              </div>
+            </div>
+            <textarea
+              id="blog-content-fr"
+              value={formData.contentFr}
+              onChange={e => setFormData({ ...formData, contentFr: e.target.value })}
+              className="w-full px-4 md:px-6 py-4 md:py-6 bg-violet-50 border border-violet-200 rounded-xl md:rounded-[32px] focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-mono text-sm md:text-base h-[300px] leading-relaxed text-violet-900"
+              required
+              placeholder="Rédigez votre contenu en français..."
             />
           </div>
         </div>
       </div>
 
       {/* SECTION : STATUT */}
-      <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm space-y-10">
-        <h3 className="text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-4">
-          <span className="w-12 h-[3px] bg-violet-600 rounded-full"></span>
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-4 md:space-y-6">
+        <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
+          <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Paramètres de visibilité
         </h3>
-        <div className="flex flex-wrap gap-8 px-2">
-          <label className="flex items-center gap-4 cursor-pointer group">
-            <div className={`w-6 h-6 rounded-full border-2 transition-all flex items-center justify-center ${formData.status === 'draft' ? 'border-violet-600 bg-violet-600 shadow-lg shadow-violet-100' : 'border-gray-200 bg-white'}`}>
-              <div className="w-2 h-2 bg-white rounded-full"></div>
+        <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-8 px-2">
+          <label className="flex items-center gap-3 md:gap-4 cursor-pointer group">
+            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 transition-all flex items-center justify-center ${formData.status === 'draft' ? 'border-violet-600 bg-violet-600 shadow-lg shadow-violet-100' : 'border-gray-200 bg-white'}`}>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></div>
             </div>
             <input
               type="radio"
@@ -216,11 +261,11 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
               onChange={e => setFormData({ ...formData, status: e.target.value as 'draft' })}
               className="hidden"
             />
-            <span className="text-sm font-bold text-gray-700 group-hover:text-violet-600 transition-colors">Brouillon (Non visible)</span>
+            <span className="text-xs md:text-sm font-bold text-gray-700 group-hover:text-violet-600 transition-colors">Brouillon (Non visible)</span>
           </label>
-          <label className="flex items-center gap-4 cursor-pointer group">
-            <div className={`w-6 h-6 rounded-full border-2 transition-all flex items-center justify-center ${formData.status === 'published' ? 'border-violet-600 bg-violet-600 shadow-lg shadow-violet-100' : 'border-gray-200 bg-white'}`}>
-              <div className="w-2 h-2 bg-white rounded-full"></div>
+          <label className="flex items-center gap-3 md:gap-4 cursor-pointer group">
+            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 transition-all flex items-center justify-center ${formData.status === 'published' ? 'border-violet-600 bg-violet-600 shadow-lg shadow-violet-100' : 'border-gray-200 bg-white'}`}>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></div>
             </div>
             <input
               type="radio"
@@ -230,29 +275,29 @@ export function BlogForm({ post, onSubmit, onCancel, isLoading }: BlogFormProps)
               onChange={e => setFormData({ ...formData, status: e.target.value as 'published' })}
               className="hidden"
             />
-            <span className="text-sm font-bold text-gray-700 group-hover:text-violet-600 transition-colors">Publié (En ligne)</span>
+            <span className="text-xs md:text-sm font-bold text-gray-700 group-hover:text-violet-600 transition-colors">Publié (En ligne)</span>
           </label>
         </div>
       </div>
 
       {/* ACTIONS */}
-      <div className="flex flex-col md:flex-row justify-end gap-4 pt-10 border-t border-gray-100">
+      <div className="flex flex-col md:flex-row justify-end gap-3 md:gap-4 pt-6 md:pt-8 lg:pt-10 border-t border-gray-100">
         <Button
           type="button"
           variant="outline"
           onClick={onCancel}
-          className="h-16 px-10 rounded-2xl border-gray-200 text-gray-400 font-bold hover:bg-gray-50 hover:text-gray-600 transition-all"
+          className="w-full md:w-auto h-12 md:h-14 lg:h-16 px-6 md:px-10 rounded-xl md:rounded-2xl border-gray-200 text-gray-400 font-bold hover:bg-gray-50 hover:text-gray-600 transition-all"
         >
           Annuler
         </Button>
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-16 px-12 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-2xl shadow-violet-200 min-w-[250px] transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full md:w-auto h-12 md:h-14 lg:h-16 px-8 md:px-12 rounded-xl md:rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-2xl shadow-violet-200 min-w-[200px] md:min-w-[250px] transition-all transform hover:scale-[1.02] active:scale-[0.98]"
         >
           {isLoading ? (
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-4 h-4 md:w-5 md:h-5 border-2 md:border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
               Publication...
             </div>
           ) : post ? 'Mettre à jour l\'article' : 'Publier l\'article'}

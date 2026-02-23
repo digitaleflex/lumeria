@@ -2,7 +2,7 @@
    ADMIN DASHBOARD - Application admin complète
    ============================================ */
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, Routes, Route, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -14,7 +14,7 @@ import {
   User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useAdminProducts, useAdminBlog, useAdminAnalytics } from '@/admin/hooks';
 import {
@@ -260,9 +260,9 @@ function ProductsPage() {
       )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-[1200px] w-[95vw] max-h-[95vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
-          <div className="p-12">
-            <div className="mb-10">
+        <DialogContent className="w-[99vw] max-w-[3200px] max-h-[98vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
+          <div className="pt-6 pb-12 px-16">
+            <div className="mb-8">
               <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
                 {editingProduct ? 'Modifier le produit' : 'Nouveau Produit'}
               </h2>
@@ -348,11 +348,11 @@ function BlogPage() {
       )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-[1200px] w-[95vw] max-h-[95vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
-          <div className="p-12">
-            <div className="mb-10">
+        <DialogContent className="w-[99vw] max-w-[3200px] max-h-[98vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
+          <div className="pt-6 pb-12 px-12">
+            <div className="mb-8">
               <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
-                {editingPost ? 'Modifier l\'article' : 'Rédiger une pépite'}
+                {editingPost ? "Modifier l'article" : 'Rédiger une pépite'}
               </h2>
               <p className="text-gray-500 mt-2 font-medium">Partagez vos conseils et votre expertise avec votre communauté.</p>
             </div>
@@ -459,8 +459,6 @@ function AnalyticsPage() {
 // MAIN ADMIN DASHBOARD
 // ============================================
 export function AdminDashboard() {
-  const navigate = useNavigate();
-  const { isAdmin } = useAuthContext();
 
   // Protection enlevée à la demande de l'utilisateur
   /*
@@ -476,15 +474,13 @@ export function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Sidebar />
-      <main className="ml-72 p-8 lg:p-12">
-        <div className="max-w-[1600px] mx-auto">
-          <Routes>
-            <Route path="/" element={<DashboardHome />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-          </Routes>
-        </div>
+      <main className="ml-72 px-6 py-8">
+        <Routes>
+          <Route path="/" element={<DashboardHome />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+        </Routes>
       </main>
     </div>
   );
