@@ -211,7 +211,12 @@ export function Navbar({ onCartClick }: NavbarProps) {
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80 bg-violet-100 dark:bg-gray-950 border-l-violet-200 dark:border-l-violet-900/30 p-8 shadow-2xl">
+              <SheetContent 
+                side="right" 
+                className="w-80 bg-violet-100 dark:bg-gray-950 border-l-violet-200 dark:border-l-violet-900/30 p-8 shadow-2xl"
+                title="Menu de navigation"
+                description="Options de navigation et paramètres du compte"
+              >
                 <nav className="flex flex-col gap-4 mt-8">
                   {navLinks.map((link) => (
                     <Link

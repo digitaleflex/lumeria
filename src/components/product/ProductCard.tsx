@@ -4,7 +4,6 @@
 
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { formatPrice, calculateDiscount } from '@/lib/utils';
 import type { Product } from '@/types';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -43,13 +42,13 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
         </Link>
 
         {/* Content */}
-        <div className="p-3">
+        <div className="p-3 text-center">
           <h3 className="font-medium text-sm text-gray-900 truncate">{product.name}</h3>
-          <div className="flex items-center gap-1 mt-1">
+          <div className="flex items-center justify-center gap-1 mt-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
             <span className="text-xs text-gray-500">{product.rating}</span>
           </div>
-          <div className="flex items-center justify-between mt-2">
+          <div className="flex flex-col items-center gap-2 mt-3">
             <div className="flex items-center gap-1">
               <span className="font-bold text-violet-600">{formatPrice(product.price)}</span>
               {product.originalPrice && (
@@ -63,9 +62,10 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
                 e.preventDefault();
                 if (onAddToCart) onAddToCart(product.id);
               }}
-              className="p-1.5 bg-violet-100 hover:bg-violet-200 rounded-full transition-colors"
+              className="w-full py-2 bg-violet-100 hover:bg-violet-200 rounded-lg transition-colors flex items-center justify-center gap-2 text-violet-600 font-medium text-xs"
             >
-              <ShoppingBag className="w-4 h-4 text-violet-600" />
+              <ShoppingBag className="w-3.5 h-3.5" />
+              Ajouter
             </button>
           </div>
         </div>
@@ -122,12 +122,12 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
       </Link>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-4 text-center">
         <p className="text-xs text-violet-600 font-medium mb-1">{product.brand}</p>
         <h3 className="font-semibold text-gray-900 mb-1 line-clamp-1">{product.name}</h3>
 
         {/* Rating */}
-        <div className="flex items-center gap-1 mb-2">
+        <div className="flex items-center justify-center gap-1 mb-2">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
               <Star
@@ -143,26 +143,25 @@ export function ProductCard({ product, onAddToCart, variant = 'default' }: Produ
         </div>
 
         {/* Price & CTA */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center gap-3 mt-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-lg text-violet-700">{formatPrice(product.price)}</span>
+            <span className="font-bold text-xl text-violet-700">{formatPrice(product.price)}</span>
             {product.originalPrice && (
               <span className="text-sm text-gray-400 line-through">
                 {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>
-          <Button
-            size="sm"
+          <button
             onClick={(e) => {
               e.preventDefault();
               if (onAddToCart) onAddToCart(product.id);
             }}
-            className="bg-violet-600 hover:bg-violet-700"
+            className="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700 w-full transition flex items-center justify-center"
           >
             <ShoppingBag className="w-4 h-4 mr-1" />
-            Ajouter
-          </Button>
+            Ajouter au panier
+          </button>
         </div>
       </div>
     </div>

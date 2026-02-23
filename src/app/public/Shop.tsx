@@ -32,9 +32,9 @@ export function Shop() {
     <div className="min-h-screen bg-violet-100 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">Tous les produits</h1>
-          <p className="text-gray-500">
+        <div className="mb-12 text-left md:text-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">Tous les produits</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl md:mx-auto">
             Découvrez notre collection de soins premium et produits de beauté
           </p>
         </div>

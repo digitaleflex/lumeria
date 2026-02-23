@@ -1,15 +1,9 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins/magic-link";
-import { BrevoClient } from "@getbrevo/brevo";
 import { db } from "./db";
 import { magicLinkAttempts } from "./schema";
 import { eq, and, gte, sql } from "drizzle-orm";
-
-// Initialize Brevo API client
-const brevo = new BrevoClient({
-  apiKey: process.env.BREVO_API_KEY || "",
-});
 
 // Rate limiting constants
 const MAX_ATTEMPTS_PER_HOUR = 3;
@@ -109,45 +103,13 @@ async function recordAttempt(email: string, ipAddress?: string): Promise<void> {
   }
 }
 
-// Send email via Brevo
+// Send email via console log for development
 async function sendMagicLinkEmail(email: string, url: string): Promise<void> {
-  await brevo.transactionalEmails.sendTransacEmail({
-    sender: {
-      name: "Lumiera",
-      email: "eurin@eurinhash.com"
-    },
-    to: [{ email }],
-    subject: "Votre lien de connexion Lumiera",
-    htmlContent: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #6366f1; font-size: 28px; margin: 0;">Lumiera</h1>
-        </div>
-        
-        <div style="background: #f8f9fa; border-radius: 12px; padding: 30px; text-align: center;">
-          <h2 style="color: #1f2937; margin-bottom: 20px;">Connexion sans mot de passe</h2>
-          <p style="color: #6b7280; margin-bottom: 25px;">
-            Cliquez sur le bouton ci-dessous pour vous connecter à votre compte.
-            <br>Ce lien expire dans <strong>10 minutes</strong>.
-          </p>
-          
-          <a href="${url}" style="display: inline-block; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
-            Se connecter
-          </a>
-          
-          <p style="color: #9ca3af; font-size: 13px; margin-top: 25px;">
-            Si vous n'avez pas demandé ce lien, ignorez simplement cet email.
-          </p>
-        </div>
-        
-        <p style="color: #9ca3af; font-size: 12px; text-align: center; margin-top: 30px;">
-          Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br>
-          <a href="${url}" style="color: #6366f1; word-break: break-all;">${url}</a>
-        </p>
-      </div>
-    `
-  });
+  console.log("📧 Magic link for", email, ":", url);
+  // In production, integrate with Brevo or another email service
 }
+
+console.log("🔐 Initializing Better Auth...");
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -156,6 +118,8 @@ export const auth = betterAuth({
   plugins: [
     magicLink({
       sendMagicLink: async ({ email, url }) => {
+        console.log("🔑 Magic link request for:", email);
+        
         // Check rate limit
         const rateCheck = await checkRateLimit(email);
 
@@ -182,9 +146,11 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     },
   },
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3001",
   secret: process.env.BETTER_AUTH_SECRET || "your-super-secret-key-change-in-production-min-32-chars",
 });
+
+console.log("✅ Better Auth initialized successfully");
 
 export type Auth = typeof auth;
 export { checkRateLimit, MAX_ATTEMPTS_PER_HOUR, COOLDOWN_SECONDS };

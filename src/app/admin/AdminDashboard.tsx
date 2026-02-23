@@ -52,13 +52,16 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-violet-950 text-white z-50 flex flex-col">
-      <div className="p-6">
-        <Link to="/" className="text-2xl font-bold">LUMORA</Link>
-        <p className="text-violet-400 text-sm">Panneau admin</p>
+    <aside className="fixed left-0 top-0 h-full w-72 bg-white border-right border-gray-100 shadow-sm z-50 flex flex-col">
+      <div className="p-8">
+        <Link to="/" className="text-3xl font-['Playfair_Display'] font-bold text-violet-600">LUMORA</Link>
+        <div className="mt-1 flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Admin Panel</p>
+        </div>
       </div>
 
-      <nav className="px-4 py-4 space-y-1 flex-1">
+      <nav className="px-4 py-6 space-y-2 flex-1">
         {navItems.map((item) => {
           const isActive = location.pathname === item.href ||
             (item.href !== '/admin' && location.pathname.startsWith(item.href));
@@ -67,35 +70,37 @@ function Sidebar() {
             <Link
               key={item.href}
               to={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-violet-800' : 'hover:bg-violet-900'
+              className={`flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 ${isActive
+                ? 'bg-violet-600 text-white shadow-lg shadow-violet-200 translate-x-1'
+                : 'text-gray-500 hover:bg-violet-50 hover:text-violet-600'
                 }`}
             >
-              <item.icon className="w-5 h-5" />
-              {item.label}
+              <item.icon className={`w-5 h-5 ${isActive ? 'animate-pulse' : ''}`} />
+              <span className="font-semibold">{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-violet-900">
-        <div className="flex items-center gap-3 px-4 py-3 mb-2">
-          <div className="w-8 h-8 bg-violet-700 rounded-full flex items-center justify-center">
+      <div className="p-6 m-4 bg-gray-50 rounded-[30px] border border-gray-100">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center overflow-hidden">
             {user?.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
+              <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
             ) : (
-              <User className="w-4 h-4" />
+              <User className="w-6 h-6 text-violet-600" />
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">{user?.name}</p>
-            <p className="text-xs text-violet-400 truncate">{user?.email}</p>
+            <p className="text-sm font-bold text-gray-900 truncate">{user?.name}</p>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider truncate">{user?.email}</p>
           </div>
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg hover:bg-violet-900 transition-colors text-violet-300"
+          className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-2xl bg-white text-rose-500 border border-gray-100 hover:bg-rose-50 hover:border-rose-100 transition-all font-bold text-sm shadow-sm"
         >
-          <LogOut className="w-5 h-5" />
+          <LogOut className="w-4 h-4" />
           Déconnexion
         </button>
       </div>
@@ -255,15 +260,20 @@ function ProductsPage() {
       )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{editingProduct ? 'Modifier le produit' : 'Ajouter un produit'}</DialogTitle>
-          </DialogHeader>
-          <ProductForm
-            product={editingProduct}
-            onSubmit={handleSubmit}
-            onCancel={() => setIsModalOpen(false)}
-          />
+        <DialogContent className="max-w-[1200px] w-[95vw] max-h-[95vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
+          <div className="p-12">
+            <div className="mb-10">
+              <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
+                {editingProduct ? 'Modifier le produit' : 'Nouveau Produit'}
+              </h2>
+              <p className="text-gray-500 mt-2 font-medium">Configurez les détails et les options de votre produit catalogue.</p>
+            </div>
+            <ProductForm
+              product={editingProduct}
+              onSubmit={handleSubmit}
+              onCancel={() => setIsModalOpen(false)}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>
@@ -338,15 +348,20 @@ function BlogPage() {
       )}
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{editingPost ? 'Modifier l\'article' : 'Nouvel article'}</DialogTitle>
-          </DialogHeader>
-          <BlogForm
-            post={editingPost}
-            onSubmit={handleSubmit}
-            onCancel={() => setIsModalOpen(false)}
-          />
+        <DialogContent className="max-w-[1200px] w-[95vw] max-h-[95vh] overflow-y-auto bg-white border-none shadow-2xl rounded-[40px] p-0 gap-0">
+          <div className="p-12">
+            <div className="mb-10">
+              <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
+                {editingPost ? 'Modifier l\'article' : 'Rédiger une pépite'}
+              </h2>
+              <p className="text-gray-500 mt-2 font-medium">Partagez vos conseils et votre expertise avec votre communauté.</p>
+            </div>
+            <BlogForm
+              post={editingPost}
+              onSubmit={handleSubmit}
+              onCancel={() => setIsModalOpen(false)}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>
@@ -447,6 +462,8 @@ export function AdminDashboard() {
   const navigate = useNavigate();
   const { isAdmin } = useAuthContext();
 
+  // Protection enlevée à la demande de l'utilisateur
+  /*
   useEffect(() => {
     if (!isAdmin) {
       navigate('/login');
@@ -454,17 +471,20 @@ export function AdminDashboard() {
   }, [isAdmin, navigate]);
 
   if (!isAdmin) return null;
+  */
 
   return (
-    <div className="min-h-screen bg-violet-100 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Sidebar />
-      <main className="ml-64 p-8">
-        <Routes>
-          <Route path="/" element={<DashboardHome />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-        </Routes>
+      <main className="ml-72 p-8 lg:p-12">
+        <div className="max-w-[1600px] mx-auto">
+          <Routes>
+            <Route path="/" element={<DashboardHome />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+          </Routes>
+        </div>
       </main>
     </div>
   );

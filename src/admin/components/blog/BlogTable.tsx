@@ -25,73 +25,74 @@ export function BlogTable({ posts, onEdit, onDelete, onToggleStatus }: BlogTable
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div className="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Article</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Author</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-              <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-50/50 border-b border-gray-100">
+              <th className="px-8 py-6 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Article</th>
+              <th className="px-8 py-6 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Auteur</th>
+              <th className="px-8 py-6 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Statut</th>
+              <th className="px-8 py-6 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Date</th>
+              <th className="px-8 py-6 text-right text-xs font-bold text-gray-400 uppercase tracking-widest">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-50">
             {posts.map((post) => (
-              <tr key={post.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <img 
-                      src={post.coverImage} 
-                      alt={post.title} 
-                      className="w-12 h-12 rounded-lg object-cover bg-gray-100" 
-                    />
+              <tr key={post.id} className="group hover:bg-violet-50/30 transition-colors">
+                <td className="px-8 py-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-12 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0 shadow-sm">
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
                     <div>
-                      <p className="font-medium text-gray-900 line-clamp-1">{post.title}</p>
-                      <p className="text-xs text-gray-500">{post.readTime} min read</p>
+                      <p className="font-bold text-gray-900 group-hover:text-violet-600 transition-colors line-clamp-1">{post.title}</p>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{post.readTime} min de lecture</p>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-gray-600">{post.author}</td>
-                <td className="px-6 py-4">
+                <td className="px-8 py-6 text-gray-600 font-medium">{post.author}</td>
+                <td className="px-8 py-6">
                   <button
                     onClick={() => onToggleStatus(post)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
-                      post.status === 'published'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-amber-100 text-amber-700'
-                    }`}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${post.status === 'published'
+                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                        : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                      }`}
                   >
                     {post.status === 'published' ? (
-                      <><CheckCircle className="w-3.5 h-3.5" /> Published</>
+                      <><CheckCircle className="w-3.5 h-3.5" /> Publié</>
                     ) : (
-                      <><XCircle className="w-3.5 h-3.5" /> Draft</>
+                      <><XCircle className="w-3.5 h-3.5" /> Brouillon</>
                     )}
                   </button>
                 </td>
-                <td className="px-6 py-4 text-gray-600">
+                <td className="px-8 py-6 text-gray-400 text-xs font-bold uppercase tracking-wider">
                   {post.status === 'published' ? formatDate(post.publishedAt) : '-'}
                 </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-1">
+                <td className="px-8 py-6 text-right">
+                  <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Link to={`/blog/${post.slug}`} target="_blank">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-xl border-gray-200 hover:bg-white hover:text-violet-600 transition-all">
                         <Eye className="w-4 h-4" />
                       </Button>
                     </Link>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 text-gray-500"
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-10 w-10 rounded-xl border-gray-200 hover:bg-white text-gray-600 hover:text-violet-600 transition-all"
                       onClick={() => onEdit(post)}
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 text-rose-500"
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-10 w-10 rounded-xl border-gray-200 hover:bg-rose-50 hover:border-rose-100 text-rose-500 transition-all"
                       onClick={() => onDelete(post)}
                     >
                       <Trash2 className="w-4 h-4" />

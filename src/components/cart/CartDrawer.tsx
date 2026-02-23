@@ -33,7 +33,11 @@ export function CartDrawer({
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="w-full sm:max-w-lg flex flex-col bg-violet-100 dark:bg-gray-950 border-l-violet-200 dark:border-l-violet-900/30">
+      <SheetContent 
+        className="w-full sm:max-w-lg flex flex-col bg-violet-100 dark:bg-gray-950 border-l-violet-200 dark:border-l-violet-900/30"
+        title="Votre panier"
+        description="Consultez et gérez les articles de votre panier"
+      >
         <SheetHeader className="space-y-2.5 pb-4">
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5" />

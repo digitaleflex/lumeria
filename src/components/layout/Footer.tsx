@@ -49,17 +49,17 @@ export function Footer() {
         </form>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-        <div className="space-y-6">
-          <Link to="/" className="text-3xl font-['Playfair_Display'] font-bold text-violet-600 block">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center">
+        <div className="space-y-6 flex flex-col items-center text-center">
+          <Link to="/" className="text-3xl font-['Playfair_Display'] font-bold text-violet-600">
             LUMORA
           </Link>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
             Beauté sublimatrice et bienfaisante pour tous les teints. Sans cruauté. Végan. Approuvé par les dermatologues.
           </p>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center">
           <h4 className="font-bold mb-6 uppercase text-xs tracking-widest text-gray-900 dark:text-gray-100">Boutique</h4>
           <ul className="space-y-4 text-sm text-gray-500">
             {footerLinks.shop.map((link) => (
@@ -72,7 +72,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center">
           <h4 className="font-bold mb-6 uppercase text-xs tracking-widest text-gray-900 dark:text-gray-100">Entreprise</h4>
           <ul className="space-y-4 text-sm text-gray-500">
             {footerLinks.company.map((link) => (
@@ -85,7 +85,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center">
           <h4 className="font-bold mb-6 uppercase text-xs tracking-widest text-gray-900 dark:text-gray-100">Support</h4>
           <ul className="space-y-4 text-sm text-gray-500">
             {footerLinks.support.map((link) => (

@@ -12,16 +12,15 @@ interface SectionHeaderProps {
     label: string;
     href: string;
   };
-  centered?: boolean;
 }
 
-export function SectionHeader({ title, subtitle, action, centered = false }: SectionHeaderProps) {
+export function SectionHeader({ title, subtitle, action }: SectionHeaderProps) {
   return (
-    <div className={`mb-8 ${centered ? 'text-center' : ''}`}>
-      <div className={`flex items-center ${centered ? 'justify-center' : 'justify-between'} mb-2`}>
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-2">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
-        {action && !centered && (
-          <Link 
+        {action && (
+          <Link
             to={action.href}
             className="flex items-center gap-1 text-violet-600 hover:text-violet-700 font-medium text-sm"
           >
@@ -31,18 +30,9 @@ export function SectionHeader({ title, subtitle, action, centered = false }: Sec
         )}
       </div>
       {subtitle && (
-        <p className={`text-gray-500 ${centered ? 'max-w-2xl mx-auto' : ''}`}>
+        <p className="text-gray-500 max-w-2xl">
           {subtitle}
         </p>
-      )}
-      {action && centered && (
-        <Link 
-          to={action.href}
-          className="inline-flex items-center gap-1 text-violet-600 hover:text-violet-700 font-medium mt-4"
-        >
-          {action.label}
-          <ArrowRight className="w-4 h-4" />
-        </Link>
       )}
     </div>
   );

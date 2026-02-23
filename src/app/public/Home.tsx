@@ -89,7 +89,7 @@ export function Home() {
 
       {/* Category Links Grid */}
       <section className="py-12 px-6 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4">
           <Link to="/category/sunscreen" className="flex-shrink-0 group cursor-pointer block">
             <div className="w-48 h-20 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center px-4 gap-3 border border-orange-100 dark:border-orange-900/30 group-hover:scale-105 transition">
               <img alt="Sunscreen" className="w-12 h-12 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOJ8iv0Kn7shr02B4t7HE5etlCnNKpSfxsZ1Q7D48oA6oZnL3cOS91twtDOqP8NU3xjZW70M6Q4roh1vMGDI8G31vuaJqUqvUlFdpw8nSlDu3-HL-okWMGqukc70vlC5nOvRAZGvVfz8Jra9IEN2UPV4CqJ7mO0DSL1061kqh7B_gadP7rBALFKvwZorEOLKxyot5Fx67ZYLN1TZEZlYutUNA-IwE_6VbPnJ3hLB3wxvrWq3as_dsTsjgOGu79Du8tqa0uczyLCcjx" />

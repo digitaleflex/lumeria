@@ -167,7 +167,12 @@ export function ProductFilters({ filters, onFilterChange, categories }: ProductF
             )}
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-80 overflow-y-auto">
+        <SheetContent 
+          side="left" 
+          className="w-80 overflow-y-auto"
+          title="Filtres produits"
+          description="Affinez votre recherche avec nos filtres"
+        >
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-lg">Filtres</h3>
             {hasActiveFilters && (
