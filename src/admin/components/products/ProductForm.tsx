@@ -112,22 +112,22 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
   };
 
   return (
-    <div className="w-full min-w-full">
+    <div className="w-full max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-[1600px] 2xl:max-w-[2000px]">
       <form onSubmit={handleSubmit} className="space-y-10 md:space-y-12 py-4 md:py-8 w-full">
         {/* SECTION : IDENTITÉ PRODUIT */}
-        <div className="bg-white p-6 md:p-8 lg:p-10 xl:p-12 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
+        <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
           <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
             <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
             Identité du produit
           </h3>
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full">
             <div className="space-y-3 min-w-0">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Nom Anglais (Référence) *</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
                 placeholder="ex: Advanced Night Repair"
                 required
               />
@@ -138,7 +138,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
                 type="text"
                 value={formData.nameFr}
                 onChange={e => setFormData({ ...formData, nameFr: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-semibold"
                 placeholder="ex: Réparateur de Nuit Avancé"
                 required
               />
@@ -149,7 +149,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
                 type="url"
                 value={formData.affiliateUrl}
                 onChange={e => setFormData({ ...formData, affiliateUrl: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-violet-50 border border-violet-100 text-violet-700 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-violet-50 border border-violet-100 text-violet-700 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium"
                 placeholder="https://www.amazon.in/dp/..."
                 required
               />
@@ -158,18 +158,18 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
         </div>
 
         {/* SECTION : CATALOGUE & PRIX */}
-        <div className="bg-white p-6 md:p-8 lg:p-10 xl:p-12 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
+        <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
           <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
             <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
             Catalogue & Tarification
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full">
             <div className="space-y-3 min-w-0">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Catégorie *</label>
               <select
                 value={formData.categoryId}
                 onChange={e => setFormData({ ...formData, categoryId: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold cursor-pointer"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold cursor-pointer"
                 required
               >
                 {categories.map(cat => (
@@ -183,7 +183,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
                 type="number"
                 value={formData.price}
                 onChange={e => setFormData({ ...formData, price: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold text-lg text-violet-600"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-bold text-lg text-violet-600"
                 required
                 min="0"
                 step="0.01"
@@ -195,7 +195,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
                 type="number"
                 value={formData.originalPrice}
                 onChange={e => setFormData({ ...formData, originalPrice: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-gray-400 line-through"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-gray-400 line-through"
                 min="0"
                 step="0.01"
               />
@@ -204,29 +204,29 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
         </div>
 
       {/* SECTION : CONTENU DÉTAILLÉ - ENGLISH */}
-      <div className="bg-white p-6 md:p-8 lg:p-10 xl:p-12 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
         <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
           <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Detailed Information - English
         </h3>
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-10 w-full">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 lg:gap-8 w-full">
           <div className="space-y-3 min-w-0">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Product Description (EN) *</label>
             <textarea
               value={formData.description}
               onChange={e => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-32 resize-none"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-32 resize-none"
               placeholder="Describe the benefits and main features in English..."
               required
             />
           </div>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 lg:gap-8 w-full">
             <div className="space-y-3 min-w-0">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Ingredients (comma separated)</label>
               <textarea
                 value={formData.ingredients}
                 onChange={e => setFormData({ ...formData, ingredients: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
                 placeholder="ex: Water, Glycerin, Hyaluronic Acid..."
               />
             </div>
@@ -235,7 +235,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
               <textarea
                 value={formData.howToUse}
                 onChange={e => setFormData({ ...formData, howToUse: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none"
                 placeholder="ex: Apply morning and evening on clean skin..."
               />
             </div>
@@ -244,29 +244,29 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
       </div>
 
       {/* SECTION : CONTENU DÉTAILLÉ - FRANÇAIS */}
-      <div className="bg-violet-50/50 p-6 md:p-8 lg:p-10 xl:p-12 rounded-2xl md:rounded-[40px] border border-violet-100 shadow-sm space-y-6 md:space-y-8 w-full">
+      <div className="bg-violet-50/50 p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-violet-100 shadow-sm space-y-6 md:space-y-8 w-full">
         <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
           <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Informations détaillées - Français
         </h3>
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-10 w-full">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 lg:gap-8 w-full">
           <div className="space-y-3 min-w-0">
             <label className="text-[10px] font-bold uppercase tracking-widest text-violet-400 ml-1">Description du produit (FR) *</label>
             <textarea
               value={formData.descriptionFr}
               onChange={e => setFormData({ ...formData, descriptionFr: e.target.value })}
-              className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-32 resize-none text-violet-900"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-32 resize-none text-violet-900"
               placeholder="Décrivez les bénéfices et les caractéristiques principales..."
               required
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 w-full">
             <div className="space-y-3 min-w-0">
               <label className="text-[10px] font-bold uppercase tracking-widest text-violet-400 ml-1">Ingrédients (séparés par des virgules)</label>
               <textarea
                 value={formData.ingredientsFr}
                 onChange={e => setFormData({ ...formData, ingredientsFr: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none text-violet-900"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none text-violet-900"
                 placeholder="ex: Eau, Glycérine, Acide Hyaluronique..."
               />
             </div>
@@ -275,7 +275,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
               <textarea
                 value={formData.howToUseFr}
                 onChange={e => setFormData({ ...formData, howToUseFr: e.target.value })}
-                className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none text-violet-900"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-violet-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium h-24 resize-none text-violet-900"
                 placeholder="ex: Appliquez matin et soir sur une peau propre..."
               />
             </div>
@@ -284,19 +284,19 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
       </div>
 
       {/* SECTION : VISUELS ET TYPES DE PEAU */}
-      <div className="bg-white p-6 md:p-8 lg:p-10 xl:p-12 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
+      <div className="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[40px] border border-gray-100 shadow-sm space-y-6 md:space-y-8 w-full">
         <h3 className="text-sm md:text-base font-bold uppercase tracking-widest text-violet-600 flex items-center gap-3 md:gap-4">
           <span className="w-8 md:w-12 h-[3px] bg-violet-600 rounded-full"></span>
           Médias & Caractéristiques
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 w-full">
           <div className="space-y-3 min-w-0">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">URL de l'image principale</label>
             <input
               type="text"
               value={formData.image}
               onChange={e => setFormData({ ...formData, image: e.target.value })}
-              className="w-full px-6 md:px-8 py-4 md:py-5 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-blue-600"
+              className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-200 rounded-xl md:rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 shadow-sm transition-all font-medium text-blue-600"
               placeholder="https://..."
             />
           </div>
@@ -308,7 +308,7 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
                   key={type}
                   type="button"
                   onClick={() => toggleSkinType(type)}
-                  className={`px-4 md:px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${formData.skinTypes.includes(type)
+                  className={`px-3 md:px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${formData.skinTypes.includes(type)
                     ? 'bg-violet-600 text-white shadow-lg shadow-violet-200 ring-2 ring-violet-200'
                     : 'bg-white text-gray-400 border border-gray-200 hover:border-violet-300 hover:text-violet-500 shadow-sm'
                     }`}
