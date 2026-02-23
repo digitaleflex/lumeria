@@ -180,46 +180,101 @@ export function Home() {
       </section >
 
       {/* Promo Banners */}
-      < section className="py-8 bg-gray-50" >
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="relative overflow-hidden rounded-2xl aspect-[16/9] bg-gradient-to-r from-violet-500 to-purple-600">
+
+            {/* Banner 1 — -50% */}
+            <div className="group relative overflow-hidden rounded-[32px] aspect-[4/3] cursor-pointer">
+              {/* Background image */}
               <img
-                src="/images/promo-1.jpg"
-                alt="50% Off"
-                className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+                src="/images/promo-1.png"
+                alt="50% Off skincare packs"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 flex flex-col justify-center p-8">
-                <span className="text-white/80 text-sm font-medium mb-2">Offre limitée</span>
-                <h3 className="text-3xl font-bold text-white mb-4">-50%</h3>
-                <p className="text-white/90 mb-4">Sur les packs skincare sélectionnés</p>
+              {/* Dark gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+              {/* Violet accent glow */}
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/30 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col justify-center p-10 space-y-4">
+                {/* Badge */}
+                <div className="flex items-center gap-2">
+                  <span className="bg-violet-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full animate-pulse">
+                    Offre limitée
+                  </span>
+                </div>
+
+                {/* Big promo */}
+                <div>
+                  <span className="text-7xl md:text-8xl font-black text-white leading-none tracking-tighter">
+                    -50<span className="text-violet-400">%</span>
+                  </span>
+                </div>
+
+                <p className="text-white/80 text-base md:text-lg font-medium max-w-xs leading-relaxed">
+                  Sur les packs skincare<br />
+                  <span className="text-white font-bold">sélectionnés</span>
+                </p>
+
                 <Link to="/shop">
-                  <Button variant="secondary" className="w-fit">
+                  <button className="mt-2 flex items-center gap-2 bg-white text-gray-900 font-bold px-6 py-3 rounded-2xl hover:bg-violet-50 transition-all text-sm shadow-lg group-hover:gap-3">
                     Acheter maintenant
-                  </Button>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </Link>
               </div>
             </div>
-            <div className="relative overflow-hidden rounded-2xl aspect-[16/9] bg-gradient-to-r from-rose-400 to-pink-500">
+
+            {/* Banner 2 — New Arrivals */}
+            <div className="group relative overflow-hidden rounded-[32px] aspect-[4/3] cursor-pointer">
+              {/* Background image */}
               <img
-                src="/images/promo-2.jpg"
-                alt="New Arrivals"
-                className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+                src="/images/promo-2.png"
+                alt="New Arrivals - Routine Éclat"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 flex flex-col justify-center p-8">
-                <span className="text-white/80 text-sm font-medium mb-2">Nouveautés</span>
-                <h3 className="text-3xl font-bold text-white mb-4">Routine Éclat</h3>
-                <p className="text-white/90 mb-4">Kits skincare complets</p>
+              {/* Warm gold overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-stone-900/80 via-amber-950/40 to-transparent" />
+              {/* Gold glow */}
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col justify-center p-10 space-y-4">
+                {/* Badge */}
+                <div className="flex items-center gap-2">
+                  <span className="bg-amber-400 text-stone-900 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
+                    ✦ New Arrivals
+                  </span>
+                </div>
+
+                {/* Title */}
+                <div className="space-y-1">
+                  <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Nouveautés</p>
+                  <h3 className="text-4xl md:text-5xl font-['Playfair_Display'] font-bold text-white leading-tight">
+                    Routine<br />
+                    <span className="italic text-amber-300">Éclat</span>
+                  </h3>
+                </div>
+
+                <p className="text-white/80 text-base font-medium">
+                  Kits skincare complets,<br />
+                  <span className="text-white font-bold">prêts à offrir</span>
+                </p>
+
                 <Link to="/category/glow-routine">
-                  <Button variant="secondary" className="w-fit">
-                    Découvrir
-                  </Button>
+                  <button className="mt-2 flex items-center gap-2 bg-amber-400 text-stone-900 font-black px-6 py-3 rounded-2xl hover:bg-amber-300 transition-all text-sm shadow-lg group-hover:gap-3">
+                    Découvrir la collection
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </Link>
               </div>
             </div>
+
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Categories */}
       <section className="py-24 px-6 bg-violet-300/10 dark:bg-gray-800/30 text-center relative overflow-hidden">

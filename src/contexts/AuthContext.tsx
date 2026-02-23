@@ -24,7 +24,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const ADMIN_EMAILS = [
   'admin@lumora.com',
   'eurin@eurinhash.com',
-  'eflexcloud@gmail.com'
+  'eflexcloud@gmail.com',
+  'agueoundev@gmail.com'
 ];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

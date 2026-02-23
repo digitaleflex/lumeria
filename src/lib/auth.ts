@@ -119,20 +119,23 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }) => {
         console.log("🔑 Magic link request for:", email);
-        
-        // Check rate limit
-        const rateCheck = await checkRateLimit(email);
 
-        if (!rateCheck.allowed) {
-          throw new Error(
-            rateCheck.nextAttemptAt
-              ? `Veuillez attendre avant de demander un nouveau lien. Réessayez après ${rateCheck.nextAttemptAt.toLocaleTimeString()}.`
-              : "Trop de tentatives. Veuillez réessayer dans une heure."
-          );
+        // Check rate limit - Skip for admin emails
+        const adminEmails = ['admin@lumora.com', 'eurin@eurinhash.com', 'eflexcloud@gmail.com', 'agueoundev@gmail.com'];
+        const isAdmin = adminEmails.includes(email.toLowerCase());
+
+        if (!isAdmin) {
+          const rateCheck = await checkRateLimit(email);
+          if (!rateCheck.allowed) {
+            throw new Error(
+              rateCheck.nextAttemptAt
+                ? `Veuillez attendre avant de demander un nouveau lien. Réessayez après ${rateCheck.nextAttemptAt.toLocaleTimeString()}.`
+                : "Trop de tentatives. Veuillez réessayer dans une heure."
+            );
+          }
+          // Record the attempt for non-admins
+          await recordAttempt(email);
         }
-
-        // Record the attempt
-        await recordAttempt(email);
 
         // Send the email
         await sendMagicLinkEmail(email, url);
@@ -140,6 +143,10 @@ export const auth = betterAuth({
       expiresIn: 60 * 10, // 10 minutes
     }),
   ],
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days - session lasts 1 week
+    updateAge: 60 * 60 * 24, // 1 day
+  },
   socialProviders: {
     google: {
       clientId: process.env.VITE_GOOGLE_CLIENT_ID || "",

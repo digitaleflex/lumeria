@@ -11,10 +11,13 @@ import {
   BarChart3,
   LogOut,
   Plus,
-  User
+  User,
+  Menu,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useAdminProducts, useAdminBlog, useAdminAnalytics } from '@/admin/hooks';
 import {
@@ -41,7 +44,7 @@ const navItems = [
   { href: '/admin/analytics', icon: BarChart3, label: 'Analytique' },
 ];
 
-function Sidebar() {
+function Sidebar({ onClose }: { onClose?: () => void }) {
   const location = useLocation();
   const { user, logout } = useAuthContext();
   const navigate = useNavigate();
@@ -49,10 +52,15 @@ function Sidebar() {
   const handleLogout = () => {
     logout();
     navigate('/');
+    onClose?.();
+  };
+
+  const handleNavClick = (href: string) => {
+    onClose?.();
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-72 bg-white border-right border-gray-100 shadow-sm z-50 flex flex-col">
+    <aside className="fixed left-0 top-0 h-full w-72 bg-white border-r border-gray-100 shadow-sm z-50 flex flex-col">
       <div className="p-8">
         <Link to="/" className="text-3xl font-['Playfair_Display'] font-bold text-violet-600">LUMORA</Link>
         <div className="mt-1 flex items-center gap-2">
@@ -70,6 +78,7 @@ function Sidebar() {
             <Link
               key={item.href}
               to={item.href}
+              onClick={() => handleNavClick(item.href)}
               className={`flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 ${isActive
                 ? 'bg-violet-600 text-white shadow-lg shadow-violet-200 translate-x-1'
                 : 'text-gray-500 hover:bg-violet-50 hover:text-violet-600'
@@ -83,28 +92,44 @@ function Sidebar() {
       </nav>
 
       <div className="p-6 m-4 bg-gray-50 rounded-[30px] border border-gray-100">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center overflow-hidden">
-            {user?.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
-            ) : (
-              <User className="w-6 h-6 text-violet-600" />
-            )}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center">
+            <User className="w-5 h-5 text-violet-600" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-gray-900 truncate">{user?.name}</p>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider truncate">{user?.email}</p>
+            <p className="text-[10px] text-gray-500 font-medium truncate">{user?.email}</p>
           </div>
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-2xl bg-white text-rose-500 border border-gray-100 hover:bg-rose-50 hover:border-rose-100 transition-all font-bold text-sm shadow-sm"
+          className="flex items-center justify-center gap-2 px-4 py-3 w-full rounded-2xl bg-white text-rose-500 border border-gray-100 hover:bg-rose-50 hover:border-rose-100 transition-all font-bold text-sm shadow-sm"
         >
           <LogOut className="w-4 h-4" />
           Déconnexion
         </button>
       </div>
     </aside>
+  );
+}
+
+// Mobile Sidebar Component
+function MobileSidebar() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <button className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white rounded-2xl shadow-lg border border-gray-100 hover:bg-violet-50 transition-all">
+            <Menu className="w-6 h-6 text-gray-700" />
+          </button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-72 p-0" title="Menu Admin" description="Navigation du panneau d'administration">
+          <Sidebar onClose={() => setOpen(false)} />
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
 
@@ -473,8 +498,16 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Sidebar />
-      <main className="ml-72 px-6 py-8">
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
+      
+      {/* Mobile Hamburger Menu */}
+      <MobileSidebar />
+      
+      {/* Main Content */}
+      <main className="lg:ml-72 px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
         <Routes>
           <Route path="/" element={<DashboardHome />} />
           <Route path="/products" element={<ProductsPage />} />
