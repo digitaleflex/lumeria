@@ -21,22 +21,16 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const ADMIN_EMAILS = [
-  'admin@lumora.com',
-  'eurin@eurinhash.com',
-  'eflexcloud@gmail.com',
-  'agueoundev@gmail.com'
-];
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = useSession();
   const [error, setError] = useState<string | null>(null);
 
   // Convert Better Auth session to UserSession
+  // The role comes from the database user table
   const user: UserSession | null = session?.user ? {
     id: session.user.id,
     email: session.user.email,
-    role: ADMIN_EMAILS.includes(session.user.email) ? 'admin' : 'user',
+    role: (session.user as any).role || 'user', // Get role from DB
     name: session.user.name || session.user.email.split('@')[0],
     avatar: session.user.image || null,
   } : null;

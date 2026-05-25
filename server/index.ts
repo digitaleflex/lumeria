@@ -20,6 +20,7 @@ import express from "express";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "../src/lib/auth";
+import apiRoutes from "./routes";
 
 console.log("🔧 Environment loaded from .env file");
 console.log("📍 PORT:", process.env.PORT);
@@ -43,11 +44,13 @@ app.use(
 console.log("✅ CORS configured for:", process.env.VITE_API_URL?.replace(':3001', ':5173') || "http://localhost:5173");
 
 // Better Auth handler - must be before body parser
-// Use a route that captures all paths under /api/auth/
 app.use("/api/auth", toNodeHandler(auth));
 
 // Body parser for other routes
 app.use(express.json());
+
+// API routes
+app.use("/api", apiRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -58,6 +61,7 @@ app.get("/api/health", (req, res) => {
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`🔐 Auth endpoints available at http://localhost:${PORT}/api/auth/*`);
+  console.log(`📡 API endpoints available at http://localhost:${PORT}/api/*`);
 });
 
 server.on('error', (err) => {

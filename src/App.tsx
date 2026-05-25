@@ -64,11 +64,16 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+import TestAuth from './app/public/TestAuth';
+import { MagicLinkCallback } from './app/public/MagicLinkCallback';
+
 function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+      <Route path="/test-auth" element={<PublicLayout><TestAuth /></PublicLayout>} />
+      <Route path="/api/auth/magic-link/verify" element={<MagicLinkCallback />} />
       <Route path="/shop" element={<PublicLayout><Shop /></PublicLayout>} />
       <Route path="/product/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
       <Route path="/category/:slug" element={<PublicLayout><CategoryPage /></PublicLayout>} />

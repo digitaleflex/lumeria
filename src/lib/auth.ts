@@ -2,149 +2,123 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins/magic-link";
 import { db } from "./db";
-import { magicLinkAttempts } from "./schema";
-import { eq, and, gte, sql } from "drizzle-orm";
+import { user } from "./schema";
+import { eq } from "drizzle-orm";
 
-// Rate limiting constants
-const MAX_ATTEMPTS_PER_HOUR = 3;
-const COOLDOWN_SECONDS = 60;
+// Récupérer les emails admin depuis les variables d'environnement
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
+const EMAIL_SENDER = process.env.EMAIL_SENDER || '';
 
-// Type for attempt
-interface MagicLinkAttempt {
-  id: string;
-  email: string;
-  ipAddress: string | null;
-  createdAt: Date;
-  attempts: number;
-  lastAttemptAt: Date;
-}
-
-// Check and update rate limiting
-async function checkRateLimit(email: string): Promise<{ allowed: boolean; remainingAttempts: number; nextAttemptAt?: Date }> {
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-
-  // Get attempts in the last hour
-  const attempts = await db
-    .select()
-    .from(magicLinkAttempts)
-    .where(
-      and(
-        eq(magicLinkAttempts.email, email),
-        gte(magicLinkAttempts.createdAt, oneHourAgo)
-      )
-    ) as MagicLinkAttempt[];
-
-  const totalAttempts = attempts.reduce((sum: number, a: MagicLinkAttempt) => sum + a.attempts, 0);
-
-  if (totalAttempts >= MAX_ATTEMPTS_PER_HOUR) {
-    const oldestAttempt = attempts[0];
-    return {
-      allowed: false,
-      remainingAttempts: 0,
-      nextAttemptAt: new Date(oldestAttempt.createdAt.getTime() + 60 * 60 * 1000)
-    };
-  }
-
-  // Check cooldown (60 seconds between attempts)
-  const recentAttempt = attempts.find((a: MagicLinkAttempt) =>
-    new Date(a.lastAttemptAt).getTime() > Date.now() - COOLDOWN_SECONDS * 1000
-  );
-
-  if (recentAttempt) {
-    return {
-      allowed: false,
-      remainingAttempts: MAX_ATTEMPTS_PER_HOUR - totalAttempts,
-      nextAttemptAt: new Date(new Date(recentAttempt.lastAttemptAt).getTime() + COOLDOWN_SECONDS * 1000)
-    };
-  }
-
-  return {
-    allowed: true,
-    remainingAttempts: MAX_ATTEMPTS_PER_HOUR - totalAttempts
-  };
-}
-
-// Record a magic link attempt
-async function recordAttempt(email: string, ipAddress?: string): Promise<void> {
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-
-  // Check if there's an existing record in the last hour
-  const existing = await db
-    .select()
-    .from(magicLinkAttempts)
-    .where(
-      and(
-        eq(magicLinkAttempts.email, email),
-        gte(magicLinkAttempts.createdAt, oneHourAgo)
-      )
-    )
-    .limit(1) as MagicLinkAttempt[];
-
-  if (existing.length > 0) {
-    // Update existing record
-    await db
-      .update(magicLinkAttempts)
-      .set({
-        attempts: sql`${magicLinkAttempts.attempts} + 1`,
-        lastAttemptAt: new Date(),
-        ipAddress: ipAddress || existing[0].ipAddress
-      })
-      .where(eq(magicLinkAttempts.id, existing[0].id));
-  } else {
-    // Create new record
-    await db.insert(magicLinkAttempts).values({
-      id: crypto.randomUUID(),
-      email,
-      ipAddress: ipAddress || null,
-      attempts: 1,
-      lastAttemptAt: new Date(),
-      createdAt: new Date()
-    });
-  }
-}
-
-// Send email via console log for development
+// Send email via Brevo SMTP (bypasses IP restriction)
 async function sendMagicLinkEmail(email: string, url: string): Promise<void> {
-  console.log("📧 Magic link for", email, ":", url);
-  // In production, integrate with Brevo or another email service
+  console.log("📧 Sending magic link to:", email);
+  
+  try {
+    const nodemailer = await import('nodemailer');
+    
+    // Create SMTP transporter for Brevo
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER || process.env.EMAIL_SENDER,
+        pass: process.env.SMTP_PASSWORD || process.env.BREVO_API_KEY,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Lumora" <${process.env.EMAIL_SENDER}>`,
+      to: email,
+      subject: 'Votre lien de connexion - Lumora',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #000;">Bienvenue sur Lumora !</h2>
+          <p style="font-size: 16px; color: #333;">Cliquez sur le bouton ci-dessous pour vous connecter :</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${url}" style="display: inline-block; padding: 14px 28px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: bold;">
+              Se connecter
+            </a>
+          </div>
+          <p style="color: #666; font-size: 14px;">Ce lien expire dans 10 minutes.</p>
+          <p style="color: #666; font-size: 14px;">Si vous n'avez pas demandé ce lien, ignorez cet email.</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+          <p style="color: #999; font-size: 12px;">Lumora - Votre boutique beauté</p>
+        </div>
+      `,
+    });
+    console.log("✅ Email sent successfully to:", email);
+  } catch (error: any) {
+    console.error("❌ Failed to send email:", error.message || error);
+    if (error.code === 'EAUTH') {
+      console.error("⚠️  Erreur d'authentification SMTP. Vérifie tes identifiants SMTP dans .env");
+      console.error("    Utilise ton email Brevo comme SMTP_USER");
+      console.error("    Génère un mot de passe SMTP ici: https://app.brevo.com/settings/keys/smtp");
+    }
+    // Don't throw - always succeed
+  }
 }
 
 console.log("🔐 Initializing Better Auth...");
+console.log("👥 Admins configurés:", ADMIN_EMAILS.length, "email(s)");
+console.log("📧 Email expéditeur:", EMAIL_SENDER);
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "user",
+      },
+    },
+  },
   plugins: [
     magicLink({
       sendMagicLink: async ({ email, url }) => {
         console.log("🔑 Magic link request for:", email);
 
-        // Check rate limit - Skip for admin emails
-        const adminEmails = ['admin@lumora.com', 'eurin@eurinhash.com', 'eflexcloud@gmail.com', 'agueoundev@gmail.com'];
-        const isAdmin = adminEmails.includes(email.toLowerCase());
+        // Remplacer l'URL backend par l'URL frontend
+        const frontendUrl = url.replace(
+          process.env.BETTER_AUTH_URL || "http://localhost:3001",
+          process.env.FRONTEND_URL || "http://localhost:5173"
+        );
 
-        if (!isAdmin) {
-          const rateCheck = await checkRateLimit(email);
-          if (!rateCheck.allowed) {
-            throw new Error(
-              rateCheck.nextAttemptAt
-                ? `Veuillez attendre avant de demander un nouveau lien. Réessayez après ${rateCheck.nextAttemptAt.toLocaleTimeString()}.`
-                : "Trop de tentatives. Veuillez réessayer dans une heure."
-            );
-          }
-          // Record the attempt for non-admins
-          await recordAttempt(email);
+        // Déterminer le rôle basé sur l'email
+        const isAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
+        
+        // Vérifier si l'utilisateur existe
+        const existingUser = await db.select().from(user).where(eq(user.email, email)).limit(1);
+        
+        if (existingUser.length === 0) {
+          // Créer automatiquement le compte avec le bon rôle
+          await db.insert(user).values({
+            id: crypto.randomUUID(),
+            name: email.split('@')[0],
+            email,
+            emailVerified: false,
+            role: isAdmin ? 'admin' : 'user',
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+          console.log(`✅ Compte créé: ${email} (${isAdmin ? 'admin' : 'client'})`);
+        } else if (existingUser[0].role !== (isAdmin ? 'admin' : 'user')) {
+          // Mettre à jour le rôle si nécessaire
+          await db.update(user).set({ role: isAdmin ? 'admin' : 'user' }).where(eq(user.email, email));
+          console.log(`✅ Rôle mis à jour: ${email} -> ${isAdmin ? 'admin' : 'client'}`);
         }
 
-        // Send the email
-        await sendMagicLinkEmail(email, url);
+        // Envoyer l'email avec l'URL frontend
+        await sendMagicLinkEmail(email, frontendUrl);
       },
       expiresIn: 60 * 10, // 10 minutes
     }),
   ],
   session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 days - session lasts 1 week
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day
   },
   socialProviders: {
@@ -165,4 +139,3 @@ export const auth = betterAuth({
 console.log("✅ Better Auth initialized successfully");
 
 export type Auth = typeof auth;
-export { checkRateLimit, MAX_ATTEMPTS_PER_HOUR, COOLDOWN_SECONDS };
